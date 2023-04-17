@@ -1,0 +1,38 @@
+#include "flash.h"
+
+finger_list_t finger_list;
+
+void Flash_Init(void)
+{
+	finger_list.user_num = 0;
+}
+
+uint32_t Flash_Read_Word(uint32_t faddr)
+{
+	
+}
+
+void Flash_ReadData(uint8_t ReadADDress, uint16_t *Rbufer, uint16_t NumTORead)
+{
+	
+}
+
+void Flash_WriteData(uint8_t WriteADDress, uint16_t *Wbufer, uint16_t Size)
+{
+	uint32_t Page_Error = 0;
+	FLASH_EraseInitTypeDef Flash;
+	
+	HAL_FLASH_Unlock();
+	
+	__disable_irq();
+	
+	Flash.TypeErase   = FLASH_TYPEERASE_PAGES;
+	Flash.PageAddress = 0x08008000;
+	Flash.NbPages = 1;
+	if (HAL_FLASHEx_Erase(&Flash, &Page_Error) == HAL_OK)
+	{
+		printf("²Á³ý³É¹¦\n");
+	}
+	
+	HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, 0x08008000, 0x01);
+}
